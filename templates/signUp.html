@@ -1,0 +1,33 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}新規会員登録{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link href='/static/css/signUp.css' rel='stylesheet' type='text/css'>
+<link href="/static/css/flat-ui.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block body_attribs %}
+
+    style="height=100vh; width=100vh;"
+
+{% endblock %}
+
+{% block content %}
+    <!-- <div class='col-xs-12'>
+        </br></br></br><br></br>    
+    </div> -->
+    <div class='col-xs-6 col-xs-offset-3' style='margin-top:5%;'>
+        <div class='child'>
+        {% if error %}
+            <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% else %}
+            <div class="alert alert-info" role="alert">新規会員登録を行います</div>
+        {% endif %}
+        {% import "bootstrap/wtf.html" as wtf %}
+        {{ wtf.quick_form(form) }}
+        <a href="/"><input type=button class='btn btn-sm' value='戻る'></a>
+        </div>
+    </div>
+{% endblock %} 

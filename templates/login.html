@@ -1,0 +1,34 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}login{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link href="/static/css/flat-ui.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container col-xs-8 col-xs-offset-2" style="margin-top:5%;">
+    <div class="jumbotron">
+        <h1>ひろこんったー</h1>
+        <p>を始めてみましょう</p>
+    </div>
+<div class="col-xs-8 col-xs-offset-2">
+{% if error %}
+    <div class="alert alert-danger" role="alert">{{ error }}</div>
+{% elif message %}
+    <div class="alert alert-info" role="alert">{{ message }}</div>
+{% endif %}
+{% import "bootstrap/wtf.html" as wtf %}
+{{ wtf.quick_form(form) }}
+</div>
+
+<div clas="col-md-12 ">
+    <a href="/signUp"><button type="button" class="col-xs-offset-5 btn btn-success">新規会員登録</button></a>
+</div>
+
+</div>
+
+
+{% endblock %}

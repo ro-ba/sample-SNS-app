@@ -1,0 +1,45 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%- extends "bootstrap/base.html" %}
+
+{% block title %}setting{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link href="/static/css/flat-ui.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-3.3.1.min.js"></script>
+
+
+{% endblock %}
+
+{% block body_attribs %}
+
+	class="bg-success" style="height=100vh;"
+
+{% endblock %}
+
+{% block content %}
+
+{% if error %}
+    <div class="alert alert-danger" role="alert">{{ error }}</div>
+{% endif %}
+
+<div class="container col-sm-6 col-sm-offset-3" style='margin-top:5%;'>
+    <form method='POST'>
+        <div class="form-group row">
+            <label class='label label-danger' for='newname'>アカウントの削除</label>
+            <input type="password" class="form-control" name='password' placeholder="Password">
+            <button type="submit" class='btn btn-success' name='submit' value='delete_account'>アカウントを削除</button>
+        </div>
+    </form>
+    <a href="/"><input type=button class='btn btn-sm' value='戻る'></a>
+</div>
+
+
+{% endblock %}

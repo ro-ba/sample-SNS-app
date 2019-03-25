@@ -1,0 +1,5 @@
+.vscode/
+画像/
+app.py
+supervisord.conf
+Dockerfile

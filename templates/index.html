@@ -1,0 +1,104 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%- extends "bootstrap/base.html" %}
+
+{% block title %}tter{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link href='/static/css/index.css' rel='stylesheet' type='text/css'>
+<link href="/static/css/flat-ui.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.autosize.js"></script>
+<script type="text/javascript" src="/static/js/reload_tweet.js"></script>
+<script>
+	$(function(){
+		$('#tweetarea').autosize();
+	});
+</script>
+<!-- <script type="text/javascript" src={{ url_for('static', filename='js/autoResize.js') }}></script> -->
+
+{% endblock %}
+
+{% block body_attribs %}
+
+	class="bg-success" style="height=100vh;"
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+	<div class='row'>
+		<div class='col-xs-2'>
+			<div style='position:fixed'>
+				<table class='table'>
+					<thead>
+						<th class='active'>ユーザー数</th>
+					</thead>
+					<tbody>
+						<td class='info'id=count_users>{{ count.users }}</td>
+
+					</tbody>
+					<thead>
+						<th class='active'>ツイート総数</th>
+					</thead>
+					<tbody>
+						<td class='info' id=count_tweets>{{ count.tweets }}</td>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class='col-xs-7 col-md-7' id='write_tweets'>
+			{% autoescape false %}
+			<script>
+				for (var tweet of  {{ tweets }} ){
+					document.write('<div class="row bg-info"><div class="col-xs-2" style="padding-top:5%; padding-left:0%;"><a target="_top" href="/home?name='+ tweet['userID'] +'"><img class="img-circle col-md-offset-5 " width="60" height="60" src='+ tweet['img_url'] +' ></a></div>');
+					document.write('<div class="col-xs-10"><p class="h6" style="padding-top:5%;">'+tweet['tweet']+'</p><br/><p class="text-muted text-right">'+tweet['username']+'@'+tweet['userID'] + '  ' + tweet['timestamp'] );
+					document.write('</p></div></div>');
+				}
+			</script>
+			{% endautoescape %}
+		</div>
+
+		<div class='col-xs-3 col-md-3' >
+			<div style="position: fixed">
+				<div class='editing'>
+					<a href="#" data-toggle="collapse" data-target="#sample" class="btn btn-default dropdown-toggle" role="button" >
+						<img src= {{ session.img_url }} class="img-circle" width="60" height="60" >
+					</a>
+					<div id="sample" class="collapse ">
+						<div class="panel panel-default">
+						<div class="panel-body bg-info">
+							<ul class="list-unstyled">
+								<li><a href="/profile"><input type=button class="btn btn-info" value='プロフィール'></a></li>
+								<li><a href="/setting"><input type=button class="btn btn-success" value='設定'></a></li>
+								<li><a href="/logout"><input type=button class="btn btn-warning" value='ログアウト'></a></li>
+							</ul>
+						</div>
+						</div>
+					</div>
+					<!-- <label for='menu'><p><img src= {{ session.img_url }} class="img-circle" width="40" height="40" ></p></label>
+					<input type='checkbox' id='menu' class='on-off'> -->
+					
+				</div>
+				<div id='add_tweet'>
+					<form method='POST'>
+						<textarea id="tweetarea" class="form-control demo" name="tweet" required placeholder="今、起きていることをつぶやいてみましょう" 
+						rows="2" style='max-height:70vh;'></textarea>
+						<input type="submit" class='btn btn-info' value="ツイート">
+					</form>
+				</div>
+			</div>
+		</div>
+			
+		</div>
+	</div>
+</div>
+
+{% endblock %}

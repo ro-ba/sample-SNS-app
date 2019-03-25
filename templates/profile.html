@@ -1,0 +1,76 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%- extends "bootstrap/base.html" %}
+
+{% block title %}profile{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link href='/static/css/index.css' rel='stylesheet' type='text/css'>
+<link href="/static/css/flat-ui.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<!-- この二行があるとなぜかdefaukt_image_select.jsが動かなくなる -->
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-3.3.1.min.js"></script> -->
+<script type="text/javascript" src="/static/js/preview-image.js"></script>
+<script type="text/javascript" src="/static/js/defalut_image_select.js"></script>
+<script>
+	$(function(){
+		// ページ読み込み時に実行したい処理
+		$(document).ready( function(){
+			var session_img = "{{ session.img_url }}";
+		
+			$('.preview').attr('src',session_img );
+		});
+	});
+</script>
+
+{% endblock %}
+
+{% block body_attribs %}
+
+	class="bg-success" style="height=100vh;"
+
+{% endblock %}
+
+{% block content %}
+<div class="container col-sm-6 col-sm-offset-3" style='margin-top:5%;'>
+	<div>
+		{% if message %}
+			{% for s in  message.success  %}
+				<div class="alert alert-info" role="alert">{{ s }}</div>
+			{% endfor %}
+			{% for e in message.error  %}
+			<div class="alert alert-danger" role="alert">{{ e }}</div>
+			{% endfor %}
+		{% endif%}
+	</div>
+    <form method='POST' enctype='multipart/form-data'>
+        <div class="form-group row">
+			<label class='label label-primary' for='img_file'>画像の変更</label>
+			<input type="file" id="img_file" class="form-control-file" name="img_file">
+			<div class='btn-group' data-toggle="buttons">
+				<label id=check-label class='btn btn-warning btn-sm'>
+				<input type='checkbox' class="form-check-input delete_img" name='delete_img'>画像をデフォルトに戻す</label>
+			</div>
+			
+		</div>
+			
+		<div class='row'>
+			<img class="preview" style="width:100px; height:100px; margin-left:30px; margin-bottom:30px;" />
+		</div>
+        <div class="form-group row">
+			<label class='label label-primary' for='newname'>ユーザーネームの変更</label>
+			<input type="text" class='form-control' id='newname' name="newname" placeholder="新しいユーザー名" autocomplete='off'><br />
+        </div>
+        <button type="submit" class='btn btn-success'>変更を保存</button>
+	</form>
+	<a href="/"><input type=button class='btn btn-sm' value='戻る'></a>
+</div>
+
+
+{% endblock %}
